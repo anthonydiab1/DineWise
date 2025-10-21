@@ -27,10 +27,10 @@ model Reservation {
   customerId   Int
   restaurantId Int
   date         DateTime
-  time         DateTime  @db.Time(6)
+  time         String
   nbOfGuests   Int
   createdAt    DateTime  @default(now())
-  updatedAt    DateTime
+  updatedAt    DateTime  @updatedAt
   customer     Customer   @relation(fields: [customerId], references: [id])
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
 }
@@ -60,7 +60,7 @@ model Review {
   review       String
   rating       Int
   createdAt    DateTime  @default(now())
-  updatedAt    DateTime
+  updatedAt    DateTime  @updatedAt
 
   // Relations
   customer     Customer   @relation(fields: [customerId], references: [id])
