@@ -33,4 +33,8 @@ delete(@Param('id') id: string) {
   findAll() {
     return this.customerService.findAll();
   }
+  @Get(':id')
+  findUnique(@Param('id')id:string){
+    return this.customerService.findUnique(Number(id));
+  }
 }

@@ -37,5 +37,13 @@ export class CustomerService{
     async findAll(){
         return this.prisma.customer.findMany();
     }
+    async findUnique(id : number){
+       const existing = await this.prisma.customer.findUnique({ where: { id } });
+
+  if (!existing) {
+    throw new NotFoundException(`Customer with ID ${id} not found`);
+  }
+      return this.prisma.customer.findUnique({where :{id}});
+    }
     
 }
