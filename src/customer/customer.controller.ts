@@ -27,6 +27,10 @@ update(@Param('id') id: string, @Body() dto: UpdateCustomerDTO) {
 delete(@Param('id') id: string) {
   return this.customerService.delete(Number(id));
 }
+@Get(':email')
+  findByEmail(@Param('email') email:string){
+    return this.customerService.findByEmail(email);
+  }
 
 
   @Get()

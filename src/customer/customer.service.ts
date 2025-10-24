@@ -45,5 +45,12 @@ export class CustomerService{
   }
       return this.prisma.customer.findUnique({where :{id}});
     }
+    async findByEmail(email : string){
+      const existing = await this.prisma.customer.findFirst({where:{email}});
+      if (!existing) {
+    throw new NotFoundException(`Customer with email: ${email} not found`);
+      }
+      return this.prisma.customer.findFirst({where:{email}});
+    }
     
 }
