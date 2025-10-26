@@ -2,6 +2,7 @@ import { Body, Controller, Post,Put,Param, Delete,Get} from "@nestjs/common";
 import { RestaurantService } from "./restaurant.service";
 import { CreateRestaurantDTO } from "./restaurantDTO/createRestaurantDTO";
 import { UpdateRestaurantDTO } from "./restaurantDTO/updateRestaurantDTO";
+import { min } from "class-validator";
 @Controller("restaurant")
 export class RestaurantController{
     constructor(private restaurantService:RestaurantService){
@@ -34,5 +35,9 @@ export class RestaurantController{
     @Get("name/:name")
     async findByName(@Param('name') name:string){
         return this.restaurantService.findByName(name);
+    }
+    @Get(':minPrice/:maxPrice')
+    async findByPriceRange(@Param('minPrice') minPrice : string , @Param('maxPrice') maxPrice:string){
+        return this.restaurantService.findByPriceRange(Number(minPrice),Number(maxPrice));
     }
 }
