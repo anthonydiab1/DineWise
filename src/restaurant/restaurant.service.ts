@@ -41,4 +41,18 @@ export class RestaurantService{
         }
         return this.prisma.restaurant.findUnique({where:{id}});
     }
+    async findByCuisine( cuisine : string){
+        const existing = await this.prisma.restaurant.findMany({where:{cuisine}});
+        if(!existing){
+            throw new NotFoundException(`Restaurants with cuisine ${cuisine} are not found`);
+        }
+        return this.prisma.restaurant.findMany({where:{cuisine}});
+    }
+    async findByName (name :string){
+        const existing = await this.prisma.restaurant.findFirst({where:{name}});
+        if(!existing){
+            throw new NotFoundException(`Restaurant with name ${name} is not found`);
+        }
+        return this.prisma.restaurant.findFirst({where:{name}});
+    }
 }

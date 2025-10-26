@@ -27,4 +27,12 @@ export class RestaurantController{
     async findUnique(@Param('id') id :string){
         return this.restaurantService.findUnique(Number(id));
     }
+    @Get("cuisine/:cuisine")
+    async findByCuisine(@Param('cuisine') cuisine : string){
+        return this.restaurantService.findByCuisine(cuisine);
+    }
+    @Get("name/:name")
+    async findByName(@Param('name') name:string){
+        return this.restaurantService.findByName(name);
+    }
 }
