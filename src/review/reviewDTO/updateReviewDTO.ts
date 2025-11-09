@@ -12,7 +12,7 @@ export class updateReviewDTO {
 
   @IsString()
   @IsOptional()
-  review: string;
+  comment: string;
 
   @IsInt()
   @Min(1, { message: 'Rating must be at least 1' })

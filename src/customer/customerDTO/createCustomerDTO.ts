@@ -1,23 +1,21 @@
-import {IsString,IsEmail,IsPhoneNumber,Matches, IsNotEmpty} from 'class-validator';
+import {
+  IsString,
+  IsEmail,
+  IsPhoneNumber,
+  Matches,
+  IsNotEmpty,
+  IsEnum,
+  IsOptional,
+} from 'class-validator';
 
-/*
-model Customer {
-  id          Int          @id @default(autoincrement())
-  firstName   String
-  userName    String
-  lastName    String
-  email       String
-  password    String
-  phoneNumber String
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime
-  reservations Reservation[]
-  reviews      Review[]
+export enum UserRole {
+  CUSTOMER = 'CUSTOMER',
+  RESTAURANT_OWNER = 'RESTAURANT_OWNER',
 }
-  */
-export class CreateCustomerDTO{
-    @IsString()
-    @IsNotEmpty()
+
+export class CreateCustomerDTO {
+  @IsString()
+  @IsNotEmpty()
   firstName: string;
 
   @IsString()
@@ -34,14 +32,17 @@ export class CreateCustomerDTO{
 
   @IsString()
   @IsNotEmpty()
-    @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/, {
+  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/, {
     message:
       'Password must be at least 8 characters long and include uppercase, lowercase, and a number',
   })
   password: string;
 
-  @IsPhoneNumber('LB') 
+  @IsPhoneNumber('LB')
   @IsNotEmpty()
   phoneNumber: string;
 
+  @IsEnum(UserRole) // ✅ Validate enum
+  @IsOptional() // ✅ Make optional
+  role?: UserRole = UserRole.CUSTOMER; // ✅ Default value
 }

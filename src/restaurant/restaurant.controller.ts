@@ -1,43 +1,56 @@
-import { Body, Controller, Post,Put,Param, Delete,Get} from "@nestjs/common";
+import { Body, Controller, Post, Put, Param, Delete, Get } from "@nestjs/common";
 import { RestaurantService } from "./restaurant.service";
 import { CreateRestaurantDTO } from "./restaurantDTO/createRestaurantDTO";
 import { UpdateRestaurantDTO } from "./restaurantDTO/updateRestaurantDTO";
-import { min } from "class-validator";
+
 @Controller("restaurant")
-export class RestaurantController{
-    constructor(private restaurantService:RestaurantService){
-        
-    }
+export class RestaurantController {
+    constructor(private restaurantService: RestaurantService) {}
+
     @Post()
-    async create(@Body() dto : CreateRestaurantDTO){
+    async create(@Body() dto: CreateRestaurantDTO) {
         return this.restaurantService.create(dto);
     }
+
     @Put(":id")
-    async update(@Param('id') id :string, @Body() dto: UpdateRestaurantDTO){
-        return this.restaurantService.update(dto,Number(id));
+    async update(@Param('id') id: string, @Body() dto: UpdateRestaurantDTO) {
+        return this.restaurantService.update(dto, Number(id));
     }
+
     @Delete(":id")
-    async delete (@Param('id') id :string){
+    async delete(@Param('id') id: string) {
         return this.restaurantService.delete(Number(id));
     }
-    @Get()
-    async findAll(){
-        return this.restaurantService.findAll();
-    }
-    @Get(":id")
-    async findUnique(@Param('id') id :string){
-        return this.restaurantService.findUnique(Number(id));
-    }
+
+    // ⭐ SPECIFIC routes FIRST
     @Get("cuisine/:cuisine")
-    async findByCuisine(@Param('cuisine') cuisine : string){
+    async findByCuisine(@Param('cuisine') cuisine: string) {
         return this.restaurantService.findByCuisine(cuisine);
     }
+
     @Get("name/:name")
-    async findByName(@Param('name') name:string){
+    async findByName(@Param('name') name: string) {
         return this.restaurantService.findByName(name);
     }
-    @Get(':minPrice/:maxPrice')
-    async findByPriceRange(@Param('minPrice') minPrice : string , @Param('maxPrice') maxPrice:string){
-        return this.restaurantService.findByPriceRange(Number(minPrice),Number(maxPrice));
+
+    @Get("location/:locationInText")
+    async findByLocation(@Param('locationInText') locationInText: string) {
+        return this.restaurantService.findByLocation(locationInText);
+    }
+
+    @Get(":minPrice/:maxPrice")
+    async findByPriceRange(@Param('minPrice') minPrice: string, @Param('maxPrice') maxPrice: string) {
+        return this.restaurantService.findByPriceRange(Number(minPrice), Number(maxPrice));
+    }
+
+    // ⭐ GENERIC routes LAST
+    @Get()
+    async findAll() {
+        return this.restaurantService.findAll();
+    }
+
+    @Get(":id")
+    async findUnique(@Param('id') id: string) {
+        return this.restaurantService.findUnique(Number(id));
     }
 }

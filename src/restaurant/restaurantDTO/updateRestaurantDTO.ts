@@ -54,8 +54,12 @@ export class UpdateRestaurantDTO {
     message: 'closingHour must be in HH:mm or HH:mm:ss format',
   })
   @IsOptional()
+  @IsString()
   closingHour: string;
-
+ @IsOptional()
+ @IsString()
+ locationInText : string;
+  
   @IsOptional()
   @IsString()
   @MaxLength(1000)

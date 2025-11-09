@@ -23,6 +23,12 @@ export class ReviewService{
         async findUnique(id:number){
             return this.prisma.review.findUniqueOrThrow({where:{id}});
         }
+        async findByRestaurantId(id:number){
+            return this.prisma.review.findMany({where:{restaurantId:id}});
+        }
+        async findByCustomerId(id:number){
+            return this.prisma.review.findMany({where:{customerId:id}});
+        }
         async update(data :updateReviewDTO , id: number){
                const existing = await this.prisma.review.findUnique({where:{id}});
                if(!existing){

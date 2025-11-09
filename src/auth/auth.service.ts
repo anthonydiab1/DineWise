@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateCustomerDTO } from 'src/customer/customerDTO/createCustomerDTO';
 import { CustomerService } from 'src/customer/customer.service';
 import { LoginDto } from './Dto/login.dto';
-import { JwtService } from '@nestjs/jwt';
+
 import * as bcrypt from 'bcryptjs';
 
 @Injectable()
@@ -19,7 +19,8 @@ export class AuthService {
     if (!isMatch) throw new UnauthorizedException('Invalid credentials');
 
     const { password, ...safe } = customer as any;
-    return { ...safe, message: 'Signin Successful' };
+    return { ...safe,
+      role: customer.role, message: 'Signin Successful' };
   }
 
   async signup(dto: CreateCustomerDTO) {

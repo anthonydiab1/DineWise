@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import { CreateRestaurantDTO } from "./restaurantDTO/createRestaurantDTO";
-import { UpdateCustomerDTO } from "src/customer/customerDTO/updateCustomerDTO";
+
 import { UpdateRestaurantDTO } from "./restaurantDTO/updateRestaurantDTO";
-import { min } from "class-validator";
+
 @Injectable({})
 export class RestaurantService{
     constructor(private prisma:PrismaService){
@@ -56,9 +56,17 @@ export class RestaurantService{
         }
         return this.prisma.restaurant.findFirst({where:{name}});
     }
+    async findByLocation ( locationInText : string){
+        const existing = await this.prisma.restaurant.findMany({where:{locationInText}});
+        if(!existing){
+            throw new NotFoundException(`Restaurant with the given Location ${locationInText} is not found`);
+        }
+        return this.prisma.restaurant.findMany({where:{locationInText}});
+    }
     async findByPriceRange(minPrice : number , maxPrice:number){
         if(maxPrice<minPrice){
             throw new BadRequestException(`Min Price cannot be larger than maxPrice`)
+            
         }
         const existing = await this.prisma.restaurant.findMany({where:{
             averagePrice:{
@@ -67,7 +75,7 @@ export class RestaurantService{
             },
         },
     })
-    if(!existing){
+    if(existing.length ===0){
         throw new NotFoundException(`No restaurants within this price range exists`);
     }
     return this.prisma.restaurant.findMany({where:{

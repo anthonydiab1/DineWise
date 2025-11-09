@@ -22,6 +22,12 @@ export class ReservationService{
     async findUnique(id:number){
         return this.prisma.reservation.findUniqueOrThrow({where:{id}});
     }
+    async findByRestaurantId( restaurantId : number){
+        return this.prisma.reservation.findMany({where :{restaurantId}});
+    }
+    async findByCustomerId( customerId : number){
+        return this.prisma.reservation.findMany({where :{customerId}});
+    }
     async update(data :updateReservationDTO , id: number){
            const existing = await this.prisma.reservation.findUnique({where:{id}});
            if(!existing){

@@ -59,4 +59,8 @@ export class CreateRestaurantDTO {
   @IsNotEmpty()
   @MaxLength(1000)
   description: string;
+  @IsString()
+  @IsNotEmpty()
+  locationInText: string;
+  
 }

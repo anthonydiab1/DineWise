@@ -12,7 +12,7 @@ export class createReviewDTO {
 
   @IsString()
   @IsNotEmpty()
-  review: string;
+  comment: string;
 
   @IsInt()
   @Min(1, { message: 'Rating must be at least 1' })
