@@ -42,7 +42,7 @@ export class CreateCustomerDTO {
   @IsNotEmpty()
   phoneNumber: string;
 
-  @IsEnum(UserRole) // ✅ Validate enum
-  @IsOptional() // ✅ Make optional
-  role?: UserRole = UserRole.CUSTOMER; // ✅ Default value
+  @IsEnum(UserRole)
+  @IsOptional() 
+  role?: UserRole = UserRole.CUSTOMER; 
 }

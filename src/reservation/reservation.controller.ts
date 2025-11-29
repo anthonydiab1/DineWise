@@ -12,7 +12,7 @@ export class ReservationController{
         return this.reservationService.create(dto);
     }
     
-    // ✅ PUT and DELETE with :id
+    
     @Put(":id")
     async update(@Param('id') id:string , @Body() dto : updateReservationDTO){
         return this.reservationService.update(dto,Number(id));
@@ -23,7 +23,6 @@ export class ReservationController{
         return this.reservationService.delete(Number(id));
     }
     
-    // ✅ SPECIFIC GET routes FIRST (before generic :id)
     @Get('customer/:customerId')
     async findByCustomerId(@Param('customerId') customerId : string){
         return this.reservationService.findByCustomerId(Number(customerId));

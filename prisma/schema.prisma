@@ -21,10 +21,12 @@ model Customer {
   password    String
   phoneNumber String
   role        UserRole     @default(CUSTOMER)
+  restaurantId Int?        @unique
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   reservations Reservation[]
   reviews      Review[]
+  restaurant  Restaurant?  @relation("CustomerRestaurant", fields: [restaurantId], references: [id])
 }
 
 model Reservation {
@@ -57,6 +59,7 @@ model Restaurant {
   closingHour  String 
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
+  owner        Customer?    @relation("CustomerRestaurant")
   reservations Reservation[]
   reviews      Review[]
 }

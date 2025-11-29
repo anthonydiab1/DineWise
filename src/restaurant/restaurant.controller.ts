@@ -22,7 +22,7 @@ export class RestaurantController {
         return this.restaurantService.delete(Number(id));
     }
 
-    // ⭐ SPECIFIC routes FIRST
+    
     @Get("cuisine/:cuisine")
     async findByCuisine(@Param('cuisine') cuisine: string) {
         return this.restaurantService.findByCuisine(cuisine);
@@ -43,7 +43,7 @@ export class RestaurantController {
         return this.restaurantService.findByPriceRange(Number(minPrice), Number(maxPrice));
     }
 
-    // ⭐ GENERIC routes LAST
+    
     @Get()
     async findAll() {
         return this.restaurantService.findAll();

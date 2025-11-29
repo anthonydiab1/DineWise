@@ -16,6 +16,8 @@ export class CustomerController{
     constructor(private customerService:CustomerService){}   
      @Post()
   create(@Body() dto: CreateCustomerDTO) {
+   
+    
     return this.customerService.create(dto);
   }
  @Put(':id')
@@ -30,6 +32,10 @@ delete(@Param('id') id: string) {
 @Get(':email')
   findByEmail(@Param('email') email:string){
     return this.customerService.findByEmail(email);
+  }
+  @Get('/restaurant/:restaurantId')
+  findRestaurantById(@Param('id') id : string){
+    return this.customerService.findRestaurant(Number(id));
   }
 
 

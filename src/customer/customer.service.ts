@@ -10,6 +10,7 @@ export class CustomerService{
 
     }
     async create(data:CreateCustomerDTO){
+      console.log('reached service with param ' + data);
         return this.prisma.customer.create({data});
     }
     async delete(id:number){
@@ -52,5 +53,24 @@ export class CustomerService{
       }
       return this.prisma.customer.findFirst({where:{email}});
     }
+    async findRestaurant(customerId: number) {
+  const customer = await this.prisma.customer.findUnique({
+    where: { id: customerId }
+  });
+
+  if (!customer) {
+    throw new NotFoundException(`Customer with ID ${customerId} not found`);
+  }
+
+  if (!customer.restaurantId) {
+    throw new NotFoundException(`Customer with ID ${customerId} does not own a restaurant`);
+  }
+
+  const restaurant = await this.prisma.restaurant.findUnique({
+    where: { id: customer.restaurantId }
+  });
+
+  return restaurant;
+}
     
 }
