@@ -1,15 +1,15 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaClient } from "../../generated/prisma";
 import { PrismaService } from "src/prisma/prisma.service";
-import { CreateCustomerDTO } from "./customerDTO/createCustomerDTO";
-import { UpdateCustomerDTO } from "./customerDTO/updateCustomerDTO";
+import { CreateCustomerInput } from "./InputType/createCustomerInput";
 import { NotFoundException } from "@nestjs/common";
+import { UpdateCustomerInput } from "./InputType/updateCustomerInput";
 @Injectable({})
 export class CustomerService{
     constructor(private prisma:PrismaService){
 
     }
-    async create(data:CreateCustomerDTO){
+    async create(data:CreateCustomerInput){
       console.log('reached service with param ' + data);
         return this.prisma.customer.create({data});
     }
@@ -22,7 +22,7 @@ export class CustomerService{
             where:{id}});
 
     }
-   async update(data: UpdateCustomerDTO, id: number) {
+   async update(data: UpdateCustomerInput, id: number) {
   const existing = await this.prisma.customer.findUnique({ where: { id } });
 
   if (!existing) {

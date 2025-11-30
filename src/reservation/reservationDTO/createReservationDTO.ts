@@ -1,20 +1,5 @@
 import { IsDate, IsInt, IsNotEmpty, IsString,Matches, Min} from "class-validator";
 import { Type } from "class-transformer";
-
-/*
-model Reservation {
-  id           Int       @id @default(autoincrement())
-  customerId   Int
-  restaurantId Int
-  date         DateTime
-  time         String
-  nbOfGuests   Int
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime
-  customer     Customer   @relation(fields: [customerId], references: [id])
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
-}
-  */
  export class createReservationDTO{
     @IsInt()
     @IsNotEmpty()

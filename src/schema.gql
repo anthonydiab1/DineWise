@@ -1,0 +1,167 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateCustomerInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+  phoneNumber: String!
+  role: UserRole! = CUSTOMER
+  userName: String!
+}
+
+input CreateReservationInput {
+  customerId: Float!
+  date: DateTime!
+  nbOfGuests: Float!
+  restaurantId: Float!
+  time: String!
+}
+
+input CreateRestaurantInput {
+  averagePrice: Float!
+  capacity: Float!
+  closingHour: String!
+  cuisine: String!
+  description: String!
+  latitude: Float!
+  locationInText: String!
+  longitude: Float!
+  name: String!
+  openingHour: String!
+  phoneNumber: String!
+}
+
+type Customer {
+  createdAt: DateTime!
+  email: String!
+  firstName: String!
+  id: ID!
+  lastName: String!
+  password: String!
+  phoneNumber: String!
+  reservations: [Reservation!]
+  restaurant: Restaurant
+  reviews: [Review!]
+  role: UserRole!
+  updatedAt: DateTime!
+  userName: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  createCustomer(input: CreateCustomerInput!): Customer!
+  createReservation(input: CreateReservationInput!): Reservation!
+  createRestaurant(input: CreateRestaurantInput!): Restaurant!
+  deleteCustomer(id: Float!): Customer!
+  deleteReservation(id: Float!): Reservation!
+  deleteRestaurant(id: Float!): Restaurant!
+  updateCustomer(id: Float!, input: UpdateCustomerInput!): Customer!
+  updateReservation(id: Float!, input: UpdateReservationInput!): Reservation!
+  updateRestaurant(id: Float!, input: UpdateRestaurantInput!): Restaurant!
+}
+
+type Query {
+  customerByEmail(email: String!): Customer!
+  customerById(id: Float!): Customer!
+  customers: [Customer!]!
+  reservationById(id: Float!): Reservation!
+  reservations: [Reservation!]!
+  reservationsByCustomer(customerId: Float!): [Reservation!]!
+  reservationsByRestaurant(restaurantId: Float!): [Reservation!]!
+  restaurantById(id: Float!): Restaurant!
+  restaurantByName(name: String!): Restaurant!
+  restaurants: [Restaurant!]!
+  restaurantsByCuisine(cuisine: String!): [Restaurant!]!
+  restaurantsByLocation(locationInText: String!): [Restaurant!]!
+  restaurantsByPriceRange(maxPrice: Float!, minPrice: Float!): [Restaurant!]!
+}
+
+type Reservation {
+  createdAt: DateTime!
+  customer: Customer!
+  customerId: Float!
+  date: DateTime!
+  id: ID!
+  nbOfGuests: Int!
+  restaurant: Restaurant!
+  restaurantId: Float!
+  time: String!
+  updatedAt: DateTime!
+}
+
+type Restaurant {
+  averagePrice: Float!
+  capacity: Int!
+  closingHour: String!
+  createdAt: DateTime!
+  cuisine: String!
+  description: String!
+  id: ID!
+  imageUrl: String!
+  latitude: Float!
+  locationInText: String!
+  longitude: Float!
+  menuUrl: String!
+  name: String!
+  openingHour: String!
+  owner: Customer!
+  phoneNumber: String!
+  reservations: [Reservation!]
+  reviews: [Review!]
+  updatedAt: DateTime!
+}
+
+type Review {
+  comment: String!
+  createdAt: DateTime!
+  customer: Customer!
+  date: DateTime!
+  id: ID!
+  rating: Int!
+  restaurant: Restaurant!
+  updatedAt: DateTime!
+}
+
+input UpdateCustomerInput {
+  email: String
+  firstName: String
+  lastName: String
+  password: String
+  phoneNumber: String
+  role: UserRole
+  userName: String
+}
+
+input UpdateReservationInput {
+  customerId: Float
+  date: DateTime
+  nbOfGuests: Float
+  restaurantId: Float
+  time: String
+}
+
+input UpdateRestaurantInput {
+  averagePrice: Float
+  capacity: Float
+  closingHour: String
+  cuisine: String
+  description: String
+  latitude: Float
+  locationInText: String
+  longitude: Float
+  name: String
+  openingHour: String
+  phoneNumber: String
+}
+
+enum UserRole {
+  CUSTOMER
+  RESTAURANT_OWNER
+}

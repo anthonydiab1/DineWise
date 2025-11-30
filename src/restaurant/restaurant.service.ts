@@ -3,13 +3,15 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { CreateRestaurantDTO } from "./restaurantDTO/createRestaurantDTO";
 
 import { UpdateRestaurantDTO } from "./restaurantDTO/updateRestaurantDTO";
+import { UpdateRestaurantInput } from "./InputType/updateRestaurantInput";
+import { CreateRestaurantInput } from "./InputType/createRestaurantInput";
 
 @Injectable({})
 export class RestaurantService{
     constructor(private prisma:PrismaService){
 
     }
-    async create(data:CreateRestaurantDTO){
+    async create(data:CreateRestaurantInput){
         return this.prisma.restaurant.create({data});
     }
     async delete(id:number){
@@ -21,7 +23,7 @@ export class RestaurantService{
             where:{id}
         });
     }
-    async update(data :UpdateRestaurantDTO , id: number){
+    async update(data :UpdateRestaurantInput , id: number){
         const existing = await this.prisma.restaurant.findUnique({where:{id}});
         if(!existing){
             throw new NotFoundException(`Restaurant with ID ${id} not found`);
