@@ -3,6 +3,7 @@ import { CustomerService } from './customer.service';
 import {Customer} from  './customer.type'
 import { CreateCustomerInput } from './InputType/createCustomerInput';
 import { UpdateCustomerInput } from './InputType/updateCustomerInput';
+import { Restaurant } from 'src/restaurant/restaurant.type';
 
 @Resolver(()=> Customer)
 export class CustomerResolver{
@@ -20,7 +21,10 @@ export class CustomerResolver{
     async customerByEmail(@Args('email') email : string){
         return this.customerService.findByEmail(email);
     }
-    
+    @Query(() => Restaurant)
+    async restaurantByCustomer(@Args('id') id: number){
+        return this.customerService.findRestaurant(id);
+    }
     @Mutation(() => Customer)
     async createCustomer(@Args('input') input : CreateCustomerInput){
         return this.customerService.create(input);

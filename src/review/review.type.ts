@@ -8,6 +8,11 @@ export class Review {
     id: number
 
     @Field()
+    customerId: number
+
+    @Field()
+    restaurantId: number
+    @Field()
     comment: string
 
     @Field(() => Int)

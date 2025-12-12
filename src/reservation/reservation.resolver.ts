@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args,Int } from '@nestjs/graphql';
 import { ReservationService } from './reservation.service';
 import {Reservation} from  './reservation.type'
 import { CreateReservationInput } from './InputType/createReservationInput';
@@ -20,7 +20,7 @@ export class ReservationResolver{
         return this.reservationService.findByRestaurantId(restaurantId);
     }
     @Query(() => Reservation)
-    async reservationById(@Args('id') id : number){
+    async reservationById(@Args('id', {type : ()=> Int}) id : number){
         return this.reservationService.findUnique(id);
     }
     @Mutation( () => Reservation)
@@ -28,12 +28,12 @@ export class ReservationResolver{
         return this.reservationService.create(input);
     }
     @Mutation(() =>Reservation)
-    async deleteReservation(@Args('id') id : number){
+    async deleteReservation(@Args('id',{type :()=>Int}) id : number){
         return this.reservationService.delete(id);
     }
     
     @Mutation (() => Reservation)
-    async updateReservation(@Args('input') input : UpdateReservationInput, @Args('id') id:number){
+    async updateReservation(@Args('input') input : UpdateReservationInput, @Args('id',{type:()=>Int}) id:number){
         return this.reservationService.update(input,id);
     }
 }

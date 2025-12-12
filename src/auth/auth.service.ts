@@ -4,6 +4,8 @@ import { CustomerService } from 'src/customer/customer.service';
 import { LoginDto } from './Dto/login.dto';
 
 import * as bcrypt from 'bcryptjs';
+import { CreateCustomerInput } from 'src/customer/InputType/createCustomerInput';
+import { LoginInput } from './InputType/loginInput';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +13,7 @@ export class AuthService {
     private customerService: CustomerService,
   ) {}
 
-  async signin(dto: LoginDto) {
+  async signin(dto: LoginInput) {
     const customer = await this.customerService.findByEmail(dto.email);
     if (!customer) throw new UnauthorizedException('Invalid credentials');
     if(!customer.role || customer.role==='CUSTOMER'){
@@ -28,7 +30,7 @@ export class AuthService {
       role: customer.role, message: 'Signin Successful' };
   }
 
-  async signup(dto: CreateCustomerDTO) {
+  async signup(dto: CreateCustomerInput) {
     let hashedPassword  ='';
     if(!dto.role || dto.role === 'CUSTOMER'){
        hashedPassword = await bcrypt.hash(dto.password, 10);

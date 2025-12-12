@@ -10,7 +10,7 @@ export class CustomerService{
 
     }
     async create(data:CreateCustomerInput){
-      console.log('reached service with param ' + data);
+      
         return this.prisma.customer.create({data});
     }
     async delete(id:number){
@@ -36,26 +36,32 @@ export class CustomerService{
 }
 
     async findAll(){
-        return this.prisma.customer.findMany();
+        return this.prisma.customer.findMany({
+          include:{restaurant:true}
+        });
     }
     async findUnique(id : number){
-       const existing = await this.prisma.customer.findUnique({ where: { id } });
+       const existing = await this.prisma.customer.findUnique({ where: { id }
+      ,
+    include:{restaurant:true} });
 
   if (!existing) {
     throw new NotFoundException(`Customer with ID ${id} not found`);
   }
-      return this.prisma.customer.findUnique({where :{id}});
+      return existing;
     }
     async findByEmail(email : string){
-      const existing = await this.prisma.customer.findFirst({where:{email}});
+      const existing = await this.prisma.customer.findFirst({where:{email},
+      include:{restaurant:true}});
       if (!existing) {
     throw new NotFoundException(`Customer with email: ${email} not found`);
       }
-      return this.prisma.customer.findFirst({where:{email}});
+      return existing;
     }
     async findRestaurant(customerId: number) {
   const customer = await this.prisma.customer.findUnique({
-    where: { id: customerId }
+    where: { id: customerId },
+    include:{restaurant:true}
   });
 
   if (!customer) {
@@ -70,7 +76,7 @@ export class CustomerService{
     where: { id: customer.restaurantId }
   });
 
-  return restaurant;
+  return  restaurant;
 }
     
 }

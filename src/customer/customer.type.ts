@@ -1,4 +1,4 @@
-import { ObjectType, Field, ID, registerEnumType } from "@nestjs/graphql";
+import { ObjectType, Field, ID, registerEnumType ,Int} from "@nestjs/graphql";
 import { UserRole } from "../../generated/prisma/index";
 import { Restaurant } from "src/restaurant/restaurant.type";
 import { Review } from "src/review/review.type";
@@ -34,6 +34,9 @@ export class Customer {
 
     @Field(() => UserRole)
     role: UserRole
+
+    @Field(() => Int,{nullable :true})
+    restaurantId?: number
 
     @Field()
     createdAt: Date

@@ -34,6 +34,13 @@ input CreateRestaurantInput {
   phoneNumber: String!
 }
 
+input CreateReviewInput {
+  comment: String!
+  customerId: Float!
+  rating: Float!
+  restaurantId: Float!
+}
+
 type Customer {
   createdAt: DateTime!
   email: String!
@@ -44,6 +51,7 @@ type Customer {
   phoneNumber: String!
   reservations: [Reservation!]
   restaurant: Restaurant
+  restaurantId: Int
   reviews: [Review!]
   role: UserRole!
   updatedAt: DateTime!
@@ -55,32 +63,47 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+input LoginInput {
+  email: String!
+  password: String!
+}
+
 type Mutation {
   createCustomer(input: CreateCustomerInput!): Customer!
   createReservation(input: CreateReservationInput!): Reservation!
   createRestaurant(input: CreateRestaurantInput!): Restaurant!
+  createReview(input: CreateReviewInput!): Review!
   deleteCustomer(id: Float!): Customer!
-  deleteReservation(id: Float!): Reservation!
+  deleteReservation(id: Int!): Reservation!
   deleteRestaurant(id: Float!): Restaurant!
+  deleteReview(id: Float!): Review!
+  login(input: LoginInput!): Customer!
+  signup(input: CreateCustomerInput!): Customer!
   updateCustomer(id: Float!, input: UpdateCustomerInput!): Customer!
-  updateReservation(id: Float!, input: UpdateReservationInput!): Reservation!
+  updateReservation(id: Int!, input: UpdateReservationInput!): Reservation!
   updateRestaurant(id: Float!, input: UpdateRestaurantInput!): Restaurant!
+  updateReview(id: Float!, input: UpdateReviewInput!): Review!
 }
 
 type Query {
   customerByEmail(email: String!): Customer!
   customerById(id: Float!): Customer!
   customers: [Customer!]!
-  reservationById(id: Float!): Reservation!
+  reservationById(id: Int!): Reservation!
   reservations: [Reservation!]!
   reservationsByCustomer(customerId: Float!): [Reservation!]!
   reservationsByRestaurant(restaurantId: Float!): [Reservation!]!
+  restaurantByCustomer(id: Float!): Restaurant!
   restaurantById(id: Float!): Restaurant!
   restaurantByName(name: String!): Restaurant!
   restaurants: [Restaurant!]!
   restaurantsByCuisine(cuisine: String!): [Restaurant!]!
   restaurantsByLocation(locationInText: String!): [Restaurant!]!
   restaurantsByPriceRange(maxPrice: Float!, minPrice: Float!): [Restaurant!]!
+  reviewByCustomer(customerId: Float!): [Review!]!
+  reviewById(id: Float!): Review!
+  reviewByRestaurant(restaurantId: Float!): [Review!]!
+  reviews: [Review!]!
 }
 
 type Reservation {
@@ -122,10 +145,12 @@ type Review {
   comment: String!
   createdAt: DateTime!
   customer: Customer!
+  customerId: Float!
   date: DateTime!
   id: ID!
   rating: Int!
   restaurant: Restaurant!
+  restaurantId: Float!
   updatedAt: DateTime!
 }
 
@@ -159,6 +184,13 @@ input UpdateRestaurantInput {
   name: String
   openingHour: String
   phoneNumber: String
+}
+
+input UpdateReviewInput {
+  comment: String
+  customerId: Float
+  rating: Float
+  restaurantId: Float
 }
 
 enum UserRole {

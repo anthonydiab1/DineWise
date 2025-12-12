@@ -2,7 +2,6 @@ import {Resolver , Query, Mutation , Args} from "@nestjs/graphql"
 import { RestaurantService } from "./restaurant.service"
 import { Restaurant } from "./restaurant.type"
 import { CreateRestaurantInput } from "./InputType/createRestaurantInput";
-import { UpdateCustomerInput } from "src/customer/InputType/updateCustomerInput";
 import { UpdateRestaurantInput } from "./InputType/updateRestaurantInput";
  
 @Resolver(() => Restaurant)

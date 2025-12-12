@@ -3,11 +3,13 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { createReviewDTO } from "./reviewDTO/createReviewDTO";
 import { NotFoundException } from "@nestjs/common";
 import { updateReviewDTO } from "./reviewDTO/updateReviewDTO";
+import { UpdateReviewInput } from "./InputType/updateReviewInput";
+import { CreateReviewInput } from "./InputType/createReviewInput";
 @Injectable({})
 export class ReviewService{
     constructor(private prisma: PrismaService){
         }
-        async create (data: createReviewDTO){
+        async create (data: CreateReviewInput){
             return this.prisma.review.create({data});
         }
         async delete(id:number){
@@ -29,7 +31,7 @@ export class ReviewService{
         async findByCustomerId(id:number){
             return this.prisma.review.findMany({where:{customerId:id}});
         }
-        async update(data :updateReviewDTO , id: number){
+        async update(data :UpdateReviewInput , id: number){
                const existing = await this.prisma.review.findUnique({where:{id}});
                if(!existing){
                    throw new NotFoundException(`Review with ID ${id} not found`);
